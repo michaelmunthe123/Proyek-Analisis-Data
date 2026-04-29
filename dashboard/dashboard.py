@@ -2,6 +2,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
 import streamlit as st
+import os
 
 # Mengatur tema seaborn
 sns.set_theme(style="darkgrid")
@@ -9,8 +10,14 @@ sns.set_theme(style="darkgrid")
 # Menyiapkan data
 @st.cache_data
 def load_data():
-    df = pd.read_csv("main_data.csv")
-    # Memastikan kolom dteday bertipe datetime
+    # Mengambil path folder tempat skrip ini berada
+    current_dir = os.path.dirname(__file__)
+    
+    # Menggabungkan path folder dengan nama file data
+    file_path = os.path.join(current_dir, "main_data.csv")
+    
+    # Membaca data menggunakan path lengkap tersebut
+    df = pd.read_csv(file_path)
     df["dteday"] = pd.to_datetime(df["dteday"])
     return df
 
